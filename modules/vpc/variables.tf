@@ -1,85 +1,75 @@
 ################################################################################
-#     环境变量
+#     ENV Variables
 ################################################################################
 
 variable "env_prefix" {
-  description = "环境前缀，用于资源命名"
+  description = "Environment prefix for resource naming (e.g., dev, prod)"
   type        = string
 }
 
 variable "aws_region" {
-  description = "AWS区域"
+  description = "AWS region where resources will be created"
   type        = string
 }
 
-variable "common_tags" {
-  description = "应用到所有资源的通用标签"
-  type        = map(string)
-  default     = {}
-}
-
 ################################################################################
-#     VPC基本配置
+#     VPC Variables
 ################################################################################
 
 variable "vpc_cidr_block" {
-  description = "VPC的CIDR块"
+  description = "CIDR block for the VPC"
   type        = string
 }
 
 variable "secondary_cidr_blocks" {
-  description = "VPC的次要CIDR块"
+  description = "Secondary CIDR blocks for the VPC"
   type        = list(string)
   default     = []
 }
 
-variable "aws_azs" {
-  description = "子网使用的可用区列表"
-  type        = list(string)
-}
-
-################################################################################
-#     子网配置
-################################################################################
-
 variable "private_subnet_cidr_blocks" {
-  description = "私有子网的CIDR块（用于应用服务，无直接互联网访问）"
+  description = "CIDR blocks for the private subnets"
   type        = list(string)
 }
 
 variable "public_subnet_cidr_blocks" {
-  description = "公有子网的CIDR块（有直接互联网访问）"
+  description = "CIDR blocks for the public subnets"
+  type        = list(string)
+}
+
+variable "aws_azs" {
+  description = "Availability zones for the subnets"
   type        = list(string)
 }
 
 ################################################################################
-#     网关配置
+#     VPC Features
 ################################################################################
 
 variable "enable_nat_gateway" {
-  description = "是否创建NAT网关"
+  description = "Whether to enable NAT Gateway"
   type        = bool
   default     = true
 }
 
 variable "single_nat_gateway" {
-  description = "是否只创建一个NAT网关（用于所有AZ）"
+  description = "Whether to use a single NAT Gateway for all private subnets"
   type        = bool
   default     = true
 }
 
-variable "enable_internet_gateway" {
-  description = "是否创建互联网网关"
+variable "create_vpc_endpoints" {
+  description = "Whether to create VPC endpoints"
   type        = bool
   default     = true
 }
 
 ################################################################################
-#     VPC端点配置
+#     Tags
 ################################################################################
 
-variable "vpc_endpoints" {
-  description = "要创建的VPC端点配置"
-  type        = map(any)
-  default     = null
+variable "tags" {
+  description = "A map of tags to add to all resources"
+  type        = map(string)
+  default     = {}
 }

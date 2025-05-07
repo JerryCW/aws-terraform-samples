@@ -1,62 +1,44 @@
-# AWS Terraform 示例
+# AWS Terraform Samples
 
-这个仓库包含了使用Terraform在AWS上部署基础设施的示例代码。
+This repository contains sample Terraform configurations for AWS resources. It is organized as follows:
 
-## 项目结构
+## Directory Structure
 
-```
-.
-├── README.md                 # 项目说明文档
-├── environments              # 不同环境的配置
-│   ├── dev                   # 开发环境配置
-│   ├── prod                  # 生产环境配置
-│   └── staging               # 测试环境配置
-├── main.tf                   # 主Terraform配置文件
-├── modules                   # 可重用的Terraform模块
-│   └── networking            # 网络相关模块
-│       └── vpc               # VPC模块（子网、路由表、网关等）
-├── outputs.tf                # 输出变量定义
-├── providers.tf              # 提供商配置
-├── variables.tf              # 变量定义
-└── version.tf                # Terraform版本要求
-```
+- `modules/`: Reusable Terraform modules
+  - `vpc/`: VPC module for creating networking infrastructure
+  - (more modules will be added)
+- `examples/`: Example implementations using the modules
+  - `vpc/`: Example VPC configuration
+  - (more examples will be added)
 
-## 使用方法
+## Getting Started
 
-1. 初始化Terraform：
-```bash
-terraform init
-```
+1. Clone this repository
+2. Navigate to the desired example directory
+3. Run `terraform init` to initialize the Terraform configuration
+4. Run `terraform plan` to see the execution plan
+5. Run `terraform apply` to apply the changes
 
-2. 选择环境并应用配置：
-```bash
-terraform apply -var-file=environments/dev/terraform.tfvars
-```
+## Available Modules
 
-3. 销毁资源：
-```bash
-terraform destroy -var-file=environments/dev/terraform.tfvars
-```
+### VPC Module
 
-## 模块
+The VPC module creates a complete networking infrastructure including:
+- VPC with configurable CIDR block
+- Public and private subnets across multiple availability zones
+- Internet Gateway for public subnets
+- NAT Gateway for private subnets
+- S3 VPC Endpoint
+- Appropriate route tables and associations
 
-### 网络模块 (networking/vpc)
+See the [module documentation](modules/vpc/README.md) for more details.
 
-包含VPC、子网、路由表、网关等网络资源的配置。
+## Prerequisites
 
-## 环境配置
+- Terraform v1.0.0+
+- AWS CLI configured with appropriate credentials
+- Basic knowledge of AWS services and Terraform
 
-### 开发环境 (dev)
-- VPC CIDR: 10.0.0.0/16
-- 次要CIDR: 100.64.0.0/16
-- 单一NAT网关
+## License
 
-### 测试环境 (staging)
-- VPC CIDR: 10.1.0.0/16
-- 次要CIDR: 100.65.0.0/16
-- 单一NAT网关
-
-### 生产环境 (prod)
-- VPC CIDR: 10.2.0.0/16
-- 次要CIDR: 100.66.0.0/16
-- 每个可用区独立NAT网关
+This project is licensed under the MIT License - see the LICENSE file for details.
