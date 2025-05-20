@@ -6,9 +6,11 @@ This repository contains sample Terraform configurations for AWS resources. It i
 
 - `modules/`: Reusable Terraform modules
   - `vpc/`: VPC module for creating networking infrastructure
+  - `eks/`: EKS module for creating Kubernetes clusters
   - (more modules will be added)
 - `examples/`: Example implementations using the modules
   - `vpc/`: Example VPC configuration
+  - `eks/`: Example EKS configuration
   - (more examples will be added)
 
 ## Getting Started
@@ -32,6 +34,17 @@ The VPC module creates a complete networking infrastructure including:
 - Appropriate route tables and associations
 
 See the [module documentation](modules/vpc/README.md) for more details.
+
+### EKS Module
+
+The EKS module creates a complete Amazon EKS cluster including:
+- EKS cluster with configurable version and networking
+- Core services managed node group
+- Optional Karpenter autoscaling
+- Optional custom pod networking
+- Optional EKS add-ons (AWS Load Balancer Controller, EFS CSI Driver, etc.)
+
+See the [module documentation](modules/eks/README.md) for more details.
 
 ## Prerequisites
 
