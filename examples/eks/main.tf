@@ -53,6 +53,8 @@ module "eks" {
   
   # 节点组配置
   core_ng_instance_types = var.core_ng_instance_types
+  core_ng_ami_id         = var.core_ng_ami_id
+  core_ng_ami_type       = var.core_ng_ami_type
   core_ng_min_size       = var.core_ng_min_size
   core_ng_max_size       = var.core_ng_max_size
   core_ng_desired_size   = var.core_ng_desired_size

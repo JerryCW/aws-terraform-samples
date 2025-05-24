@@ -44,7 +44,7 @@ output "configure_kubectl" {
 
 output "core_node_group_id" {
   description = "ID of the core node group"
-  value       = module.eks.core_node_group_id
+  value       = module.eks.eks_managed_node_groups.core_services_ng.node_group_id
 }
 
 output "custom_networking_enabled" {
@@ -91,3 +91,6 @@ output "pod_subnet_ids" {
   description = "List of subnet IDs used for pod ENIs"
   value       = var.pod_subnet_ids
 }
+
+
+

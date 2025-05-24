@@ -82,6 +82,18 @@ variable "core_ng_instance_types" {
   default     = ["c7i.large"]
 }
 
+variable "core_ng_ami_id" {
+  description = "AMI ID to use for the EKS node group. If not specified, the EKS optimized AMI will be used."
+  type        = string
+  default     = ""
+}
+
+variable "core_ng_ami_type" {
+  description = "Type of Amazon Machine Image (AMI) associated with the EKS Node Group. Valid values: AL2_x86_64, AL2_x86_64_GPU, AL2_ARM_64, AL2023_x86_64_STANDARD, AL2023_ARM_64_STANDARD"
+  type        = string
+  default     = "AL2023_x86_64_STANDARD"
+}
+
 variable "core_ng_min_size" {
   description = "Minimum number of nodes in the core node group"
   type        = number

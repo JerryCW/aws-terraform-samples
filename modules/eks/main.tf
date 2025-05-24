@@ -106,7 +106,13 @@ module "eks" {
       min_size                   = var.core_ng_min_size
       max_size                   = var.core_ng_max_size
       desired_size               = var.core_ng_desired_size
+
+      # # 如果指定了AMI ID，则使用指定的AMI
+      # ami_id                     = var.core_ng_ami_id != "" ? var.core_ng_ami_id : null
       
+      # 直接使用指定的AMI类型，不进行自动检测
+      ami_type                   = var.core_ng_ami_type
+
       # Enable Detailed Monitoring
       enable_monitoring          = true
 
