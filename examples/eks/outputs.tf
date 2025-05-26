@@ -94,3 +94,12 @@ output "pod_subnet_ids" {
 
 
 
+output "additional_nodegroups" {
+  description = "Map of additional node groups created and their attributes"
+  value       = module.eks.additional_nodegroups
+}
+
+output "additional_nodegroup_iam_roles" {
+  description = "Map of IAM roles created for additional node groups"
+  value       = module.eks.additional_nodegroup_iam_roles
+}

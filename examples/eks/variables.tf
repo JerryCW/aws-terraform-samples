@@ -153,3 +153,28 @@ variable "karpenter_helm_version" {
   type        = string
   default     = "1.3.2"
 }
+
+################################################################################
+# Additional Node Groups Variables
+################################################################################
+
+variable "create_additional_nodegroups" {
+  description = "Whether to create additional node groups"
+  type        = bool
+  default     = false
+}
+
+variable "additional_nodegroups" {
+  description = "Map of additional node group configurations"
+  type        = map(any)
+  default     = {}
+}
+################################################################################
+# Karpenter Example Variables
+################################################################################
+
+variable "create_karpenter_examples" {
+  description = "Whether to create Karpenter example deployments"
+  type        = bool
+  default     = false
+}

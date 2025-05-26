@@ -188,3 +188,87 @@ module "eks" {
 - 附加组件和Karpenter可以单独启用或禁用
 - 所有附加组件都配置了容忍度，可以在核心服务节点上运行
 - 启用自定义Pod网络需要额外的子网，这些子网应该与工作节点位于相同的可用区
+## 额外节点组
+
+本模块支持创建多个额外的节点组，可以通过以下变量进行配置：
+
+- `create_additional_nodegroups` - 是否创建额外的节点组（默认：false）
+- `additional_nodegroups` - 额外节点组的配置映射
+
+### 示例配置
+
+```hcl
+create_additional_nodegroups = true
+additional_nodegroups = {
+  app_nodegroup = {
+    desired_size   = 2
+    max_size       = 4
+    min_size       = 1
+    instance_types = ["m6i.large"]
+    ami_type       = "AL2023_x86_64_STANDARD"
+    capacity_type  = "ON_DEMAND"
+    disk_size      = 50
+    labels = {
+      "role" = "application"
+    }
+    taints = {
+      "dedicated" = {
+        value  = "app"
+        effect = "NO_SCHEDULE"
+      }
+    }
+    additional_policies = {
+      AmazonS3ReadOnlyAccess = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
+    }
+    tags = {
+      "NodeGroup" = "application"
+    }
+  }
+  
+  spot_nodegroup = {
+    desired_size   = 0
+    max_size       = 10
+    min_size       = 0
+    instance_types = ["c6i.large", "c6i.xlarge"]
+    ami_type       = "AL2023_x86_64_STANDARD"
+    capacity_type  = "SPOT"
+    disk_size      = 50
+    labels = {
+      "role" = "worker"
+      "instance-type" = "spot"
+    }
+    taints = {
+      "spot" = {
+        value  = "true"
+        effect = "PREFER_NO_SCHEDULE"
+      }
+    }
+    tags = {
+      "NodeGroup" = "spot-workers"
+    }
+  }
+}
+```
+
+### 支持的配置选项
+
+每个节点组支持以下配置选项：
+
+| 选项 | 描述 | 默认值 |
+|------|-------------|---------|
+| `desired_size` | 节点组的期望节点数 | `1` |
+| `max_size` | 节点组的最大节点数 | `3` |
+| `min_size` | 节点组的最小节点数 | `1` |
+| `instance_types` | 节点组使用的实例类型列表 | `["m6i.large"]` |
+| `ami_type` | 节点组使用的AMI类型 | `"AL2023_x86_64_STANDARD"` |
+| `capacity_type` | 节点组的容量类型（ON_DEMAND或SPOT） | `"ON_DEMAND"` |
+| `disk_size` | 节点的磁盘大小（GB） | `50` |
+| `subnet_ids` | 节点组使用的子网ID列表 | 与集群相同的子网 |
+| `labels` | 应用于节点的Kubernetes标签 | `{}` |
+| `taints` | 应用于节点的Kubernetes污点 | `{}` |
+| `additional_policies` | 附加到节点IAM角色的额外策略 | `{}` |
+| `remote_access` | 节点的远程访问配置 | `null` |
+| `max_unavailable_percentage` | 更新期间最大不可用节点百分比 | `50` |
+| `tags` | 应用于节点组资源的标签 | `{}` |
+| `node_role_arn` | 自定义节点IAM角色ARN（如果不指定，将创建新角色） | `null` |
+| `iam_role_name` | 自定义IAM角色名称 | `"${node_group_name}-role-${cluster_name}"` |

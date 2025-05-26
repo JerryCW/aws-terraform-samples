@@ -142,3 +142,16 @@ output "karpenter_queue_name" {
   description = "Name of the Karpenter SQS queue"
   value       = var.enable_karpenter ? module.karpenter[0].queue_name : null
 }
+################################################################################
+# Additional Node Groups Outputs
+################################################################################
+
+output "additional_nodegroups" {
+  description = "Map of additional node groups created and their attributes"
+  value       = var.create_additional_nodegroups ? aws_eks_node_group.additional_nodegroups : {}
+}
+
+output "additional_nodegroup_iam_roles" {
+  description = "Map of IAM roles created for additional node groups"
+  value       = var.create_additional_nodegroups ? aws_iam_role.additional_nodegroup_role : {}
+}

@@ -167,3 +167,50 @@ variable "karpenter_helm_version" {
   type        = string
   default     = "1.3.2"
 }
+################################################################################
+# Additional Node Groups Variables
+################################################################################
+
+variable "create_additional_nodegroups" {
+  description = "Whether to create additional node groups"
+  type        = bool
+  default     = false
+}
+
+variable "additional_nodegroups" {
+  description = "Map of additional node group configurations"
+  type        = map(any)
+  default     = {}
+  # Example:
+  # additional_nodegroups = {
+  #   app_nodegroup = {
+  #     desired_size = 2
+  #     max_size     = 4
+  #     min_size     = 1
+  #     instance_types = ["m6i.large"]
+  #     ami_type    = "AL2023_x86_64_STANDARD"
+  #     capacity_type = "ON_DEMAND"
+  #     disk_size   = 50
+  #     subnet_ids  = ["subnet-1", "subnet-2"]
+  #     labels = {
+  #       "role" = "app"
+  #     }
+  #     taints = {
+  #       "dedicated" = {
+  #         value  = "app"
+  #         effect = "NO_SCHEDULE"
+  #       }
+  #     }
+  #     additional_policies = {
+  #       AmazonS3ReadOnlyAccess = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
+  #     }
+  #     remote_access = {
+  #       ec2_ssh_key = "my-key"
+  #       source_security_group_ids = ["sg-123456"]
+  #     }
+  #     tags = {
+  #       "Environment" = "dev"
+  #     }
+  #   }
+  # }
+}

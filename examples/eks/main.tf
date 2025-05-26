@@ -60,6 +60,10 @@ module "eks" {
   core_ng_desired_size   = var.core_ng_desired_size
   core_ng_disk_size      = var.core_ng_disk_size
   
+  # 额外节点组配置
+  create_additional_nodegroups = var.create_additional_nodegroups
+  additional_nodegroups        = var.additional_nodegroups
+  
   # 附加组件配置
   create_addons                       = var.create_addons
   enable_aws_load_balancer_controller = var.enable_aws_load_balancer_controller
@@ -68,7 +72,7 @@ module "eks" {
   enable_vpa                          = var.enable_vpa
   
   # Karpenter配置
-  enable_karpenter      = var.enable_karpenter
+  enable_karpenter       = var.enable_karpenter
   karpenter_helm_version = var.karpenter_helm_version
   
   # 标签
